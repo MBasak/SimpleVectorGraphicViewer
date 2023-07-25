@@ -10,7 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorGraphicViewerTests", "VectorGraphicViewerTests\VectorGraphicViewerTests.csproj", "{E5767EF2-563D-47B6-93AF-04955C74945B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorGraphicViewerTests", "VectorGraphicViewerTests\VectorGraphicViewerTests.csproj", "{E5767EF2-563D-47B6-93AF-04955C74945B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample files", "Sample files", "{812CBFFC-4A9C-42A8-8374-1FE76E5F15D2}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\Lenovo\Downloads\Sample1.json = C:\Users\Lenovo\Downloads\Sample1.json
+		C:\Users\Lenovo\Downloads\Sample2.json = C:\Users\Lenovo\Downloads\Sample2.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
