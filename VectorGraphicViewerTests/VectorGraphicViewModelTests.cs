@@ -1,4 +1,5 @@
 ﻿
+using NSubstitute;
 using VectorGraphicViewer.Contracts;
 using VectorGraphicViewer.ViewModels;
 
