@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <Folder Include="Model\Shapes\ShapeCreationUtility\XmlDataHelper\" />
+    <Folder Include="Sample Files\" />
   </ItemGroup>
 
   <ItemGroup>
