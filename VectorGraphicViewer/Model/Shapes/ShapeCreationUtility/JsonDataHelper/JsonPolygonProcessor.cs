@@ -8,14 +8,18 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using VectorGraphicViewer.Constants;
 using VectorGraphicViewer.Contracts;
+using VectorGraphicViewer.ViewHelpers;
 
 namespace VectorGraphicViewer.Model.Shapes.ShapeCreationUtility.JsonDataHelper
 {
     public class JsonPolygonProcessor : JsonShapeProcessor, IJsonPolygonProcessor
     {
-        public JsonPolygonProcessor(ILogger<JsonShapeProcessor> logger)
+        IShapeScalerHelper _shapeScalerHelper;
+        public JsonPolygonProcessor(IShapeScalerHelper scaler,
+            ILogger<JsonShapeProcessor> logger)
             : base(logger)
         {
+            _shapeScalerHelper = scaler;
         }
 
         public IPolygon CreatePolygon(JToken jObject, object typeOfShape)
@@ -45,7 +49,11 @@ namespace VectorGraphicViewer.Model.Shapes.ShapeCreationUtility.JsonDataHelper
 
                 vertexNotation++;
             }
-
+            foreach (var point in polygon.Points)
+            {
+                _shapeScalerHelper.HighestX = Math.Max(Math.Abs(point.X), _shapeScalerHelper.HighestX);
+                _shapeScalerHelper.HighestY = Math.Max(Math.Abs(point.Y), _shapeScalerHelper.HighestY);
+            }
             return polygon;
 
         }

@@ -24,7 +24,7 @@ namespace VectorGraphicViewer.ViewModels
         public ObservableCollection<ICircle> Circles
         {
             get { return _circles; }
-            set
+            private set
             {
                 _circles = value;
             }
@@ -32,7 +32,7 @@ namespace VectorGraphicViewer.ViewModels
         public ObservableCollection<IPolygon> Polygons
         {
             get { return _polygons; }
-            set
+            private set
             {
                 _polygons = value;
             }
@@ -49,11 +49,7 @@ namespace VectorGraphicViewer.ViewModels
         public void AddPolygon(IPolygon polygon)
         {
             Polygons.Add(polygon);
-            foreach (var point in polygon.Points)
-            {
-                _shapeScalerHelper.HighestX = Math.Max(Math.Abs(point.X), _shapeScalerHelper.HighestX);
-                _shapeScalerHelper.HighestY = Math.Max(Math.Abs(point.Y), _shapeScalerHelper.HighestY);
-            }
+            
         }
 
         public void AddCircle(ICircle circle)
@@ -76,6 +72,7 @@ namespace VectorGraphicViewer.ViewModels
                     polygon.Points = _shapeScalerHelper.ScalePoints(polygon.Points);
                 }
             }
+            _shapeScalerHelper.ResetMax();
         }
     }
 }
