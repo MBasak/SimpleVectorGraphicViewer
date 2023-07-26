@@ -8,7 +8,7 @@ Assumptions:
 
 NOTE:
 
-1. Application is designed using SOLID principles.
+1. Application is designed using SOLID principles and MVVM
 2. Dependency injection is achieved using Generic Host.
 3. .NET 6 framework is used
 4. Sample files used for testing input is under VectorGraphicViewer/Sample Files
