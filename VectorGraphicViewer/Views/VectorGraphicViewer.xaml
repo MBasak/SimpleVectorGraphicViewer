@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:VectorGraphicViewer.Views"
         xmlns:converters="clr-namespace:VectorGraphicViewer.ViewHelpers.Converters"
+        xmlns:shapes="clr-namespace:VectorGraphicViewer.Model.Shapes"
         xmlns:behaviors="clr-namespace:VectorGraphicViewer.ViewHelpers.Behaviours"
         mc:Ignorable="d"
      WindowState="Maximized"
@@ -25,21 +26,10 @@
                     behaviors:ZoomInZoomOutBehavior.IsEnabled="True"
           behaviors:ZoomInZoomOutBehavior.ZoomFactor="0.1"
           behaviors:ZoomInZoomOutBehavior.ScrollViewer="{Binding ElementName=MainScrollViewer}">
-                <ItemsControl ItemsSource="{Binding Polygons}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Polygon Points="{Binding PointCollection}" 
-                                     Stroke="{Binding BorderColor, 
-                                Converter={StaticResource stringToColorConverter}}"
-                                     Fill="{Binding FillColor,
-                                Converter={StaticResource stringToColorConverter}}">
-                             </Polygon>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl ItemsSource="{Binding Circles}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+
+                <ItemsControl ItemsSource="{Binding Shapes}">
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type shapes:Circle}">
                             <Path Stroke="{Binding BorderColor, 
                                 Converter={StaticResource stringToColorConverter}}"  
                                   Fill="{Binding FillColor, 
@@ -52,8 +42,17 @@
                                 </Path.Data>
                             </Path>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                        <DataTemplate DataType="{x:Type shapes:Polygon}">
+                            <Polygon Points="{Binding PointCollection}" 
+                                     Stroke="{Binding BorderColor, 
+                                Converter={StaticResource stringToColorConverter}}"
+                                     Fill="{Binding FillColor,
+                                Converter={StaticResource stringToColorConverter}}">
+                            </Polygon>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl
+
             </Canvas>
             
         </Grid>

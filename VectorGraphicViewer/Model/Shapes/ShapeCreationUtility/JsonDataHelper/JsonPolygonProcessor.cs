@@ -22,7 +22,7 @@ namespace VectorGraphicViewer.Model.Shapes.ShapeCreationUtility.JsonDataHelper
             _shapeScalerHelper = scaler;
         }
 
-        public IPolygon CreatePolygon(JToken jObject, object typeOfShape)
+        public IPolygon CreatePolygon(JToken jObject)
         {
             //As assumption is data is valid, checks are not performed further,
             //but in production real time code, we should perform checks
