@@ -4,6 +4,6 @@ namespace VectorGraphicViewer.Contracts
 {
     public interface IJsonPolygonProcessor
     {
-        IPolygon CreatePolygon(JToken jObject, object typeOfShape);
+        IPolygon CreatePolygon(JToken jObject);
     }
 }

@@ -3,12 +3,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using VectorGraphicViewer.Contracts;
+using VectorGraphicViewer.Model.Shapes;
 using VectorGraphicViewer.ViewHelpers;
+using VectorGraphicViewer.ExtensionMethods;
 
 namespace VectorGraphicViewer.ViewModels
 {
@@ -18,6 +21,8 @@ namespace VectorGraphicViewer.ViewModels
     public class VectorGraphicViewerViewModel : IVectorGraphicViewerViewModel
     {
         private ObservableCollection<ICircle> _circles;
+
+        private ObservableCollection<IShape> _shapes;
         private ObservableCollection<IPolygon> _polygons;
         private IShapeScalerHelper _shapeScalerHelper;
 
@@ -38,12 +43,28 @@ namespace VectorGraphicViewer.ViewModels
             }
 
         }
+        public ObservableCollection<IShape> Shapes
+        {
+            get { return _shapes; }
+            private set
+            {
+                _shapes = value;
+            }
+
+        }
+
 
         public VectorGraphicViewerViewModel(IShapeScalerHelper shapeScalerHelper)
         {
             _circles = new ObservableCollection<ICircle>();
             _polygons = new ObservableCollection<IPolygon>();
+            _shapes = new ObservableCollection<IShape>();
             _shapeScalerHelper = shapeScalerHelper;
+        }
+
+        public void AddShape(IShape shape)
+        {
+            _shapes.Add(shape);
         }
 
         public void AddPolygon(IPolygon polygon)
@@ -61,15 +82,16 @@ namespace VectorGraphicViewer.ViewModels
         {
             Polygons.Clear();
             Circles.Clear();
+            Shapes.Clear();
         }
 
         public void ScaleShapes()
         {
             if (_shapeScalerHelper.IsScalingNeeded)
             {
-                foreach (var polygon in Polygons)
+                foreach (var shape in Shapes)
                 {
-                    polygon.Points = _shapeScalerHelper.ScalePoints(polygon.Points);
+                    ((IPolygon)shape).Points= _shapeScalerHelper.ScalePoints(((IPolygon)shape).Points);
                 }
             }
             _shapeScalerHelper.ResetMax();

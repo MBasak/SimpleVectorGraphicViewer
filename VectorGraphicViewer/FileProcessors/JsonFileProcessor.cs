@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using VectorGraphicViewer.Contracts;
+using VectorGraphicViewer.Model.Shapes;
 
 namespace VectorGraphicViewer.FileProcessors
 {
@@ -12,19 +14,18 @@ namespace VectorGraphicViewer.FileProcessors
     /// </summary>
     public class JsonFileProcessor : IJsonFileProcessor
     {
-        private readonly IJsonCircleProcessor _jsonCircleProcessor;
-        private readonly IJsonPolygonProcessor _jsonPolygonProcessor;
         private readonly IVectorGraphicViewerViewModel _vectorGraphicViewerViewModel;
         private readonly ILogger<JsonFileProcessor> _logger;
+        ShapeFactory _shapeFactory; 
         public JsonFileProcessor(IJsonCircleProcessor jsonCircleProcessor,
             IJsonPolygonProcessor jsonPolygonProcessor,
             IVectorGraphicViewerViewModel vectorGraphicViewerViewModel,
             ILogger<JsonFileProcessor> logger)
         {
-            _jsonCircleProcessor = jsonCircleProcessor;
-            _jsonPolygonProcessor = jsonPolygonProcessor;
+            
             _vectorGraphicViewerViewModel = vectorGraphicViewerViewModel;
             _logger = logger;
+            _shapeFactory = new ShapeFactory(jsonCircleProcessor, jsonPolygonProcessor);
         }
 
 
@@ -40,24 +41,13 @@ namespace VectorGraphicViewer.FileProcessors
                     foreach (var jObject in jArrayOfObjects)
                     {
                         _logger.LogInformation($"Json object {jObject.ToString()}");
+                        
                         var type = jObject["type"];
-                        object typeOfShape = null;
 
                         if (type != null)
                         {
-                            Enum.TryParse(typeof(TypesOfShape), type.ToString().ToLower(), out typeOfShape);
-                        }
-
-                        switch (typeOfShape)
-                        {
-                            case TypesOfShape.circle:
-                                _vectorGraphicViewerViewModel
-                                    .AddCircle(_jsonCircleProcessor.CreateCircle(jObject));
-                                break;
-                            default:
-                                _vectorGraphicViewerViewModel
-                                    .AddPolygon(_jsonPolygonProcessor.CreatePolygon(jObject, typeOfShape));
-                                break;
+                            string shapeType =  type.ToString().ToLower();
+                            _vectorGraphicViewerViewModel.AddShape(_shapeFactory.CreateShape(shapeType, jObject));
                         }
                     }
 
