@@ -51,7 +51,7 @@
                             </Polygon>
                         </DataTemplate>
                     </ItemsControl.Resources>
-                </ItemsControl
+                </ItemsControl>
 
             </Canvas>
             
